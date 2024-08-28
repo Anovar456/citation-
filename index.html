@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solo Brainstorming</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #1e1e2f;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .widget-container {
+            background-color: #2a2a3d;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #f9a826;
+        }
+
+        .quote-box {
+            font-size: 1.5rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .favorite-btn, .new-quote-btn, .view-favorites-btn, .back-btn {
+            background-color: #f9a826;
+            color: #1e1e2f;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .favorite-btn i, .new-quote-btn i {
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .favorite-btn:hover, .new-quote-btn:hover, .view-favorites-btn:hover, .back-btn:hover {
+            background-color: #d18f1a;
+        }
+
+        .favorites-page {
+            display: none;
+            text-align: center;
+        }
+
+        .favorites-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .favorites-list li {
+            background-color: #33334d;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .favorites-list li button {
+            background-color: transparent;
+            border: none;
+            color: red;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .quote-content {
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="widget-container" id="widgetContainer">
+        <h1>Solo Brainstorming</h1>
+        <div class="quote-box">
+            <p id="quoteContent" class="quote-content"></p>
+        </div>
+        <button id="favoriteButton" class="favorite-btn"><i id="heartIcon" class="fas fa-heart"></i></button>
+        <button id="newQuoteButton" class="new-quote-btn"><i class="fas fa-sync-alt"></i></button>
+        <button id="viewFavoritesButton" class="view-favorites-btn">Voir les Favoris</button>
+    </div>
+
+    <div id="favoritesPage" class="favorites-page">
+        <h2>Mes Citations Préférées</h2>
+        <ul id="favoritesList" class="favorites-list"></ul>
+        <button id="backButton" class="back-btn">Retour</button>
+    </div>
+
+    <script>
+        const quotes = [
+            "Le succès n'est pas final, l'échec n'est pas fatal : c'est le courage de continuer qui compte.",
+            "Le seul endroit où le succès précède le travail est dans le dictionnaire.",
+            "N'abandonne jamais. Aujourd'hui est difficile, demain le sera encore plus, mais après-demain sera ensoleillé.",
+            "Le secret de votre avenir est caché dans votre routine quotidienne.",
+            "Ne compte pas les jours, fais que les jours comptent.",
+            "L'échec est seulement l'opportunité de recommencer de manière plus intelligente.",
+            "Votre temps est limité, ne le gâchez pas en menant une existence qui n'est pas la vôtre.",
+            "La seule façon de faire du bon travail est d'aimer ce que vous faites.",
+            "Il n'y a pas de raccourci pour atteindre n'importe quel endroit qui vaille la peine d'aller.",
+            "Vous devez vous attendre à de grandes choses de vous-même avant de pouvoir les réaliser.",
+            "La plus grande gloire n'est pas de ne jamais tomber, mais de se relever à chaque chute.",
+            "Le travail acharné bat le talent quand le talent ne travaille pas dur.",
+            "Ne rêvez pas de succès, travaillez pour l'obtenir.",
+            "Croyez en vous-même et en tout ce que vous êtes. Sachez qu'il y a quelque chose en vous qui est plus grand que n'importe quel obstacle.",
+            "Le succès est la somme de petits efforts, répétés jour après jour.",
+            "La réussite, c'est se lever une fois de plus qu'on est tombé.",
+            "Les obstacles sont ces choses effrayantes que vous voyez lorsque vous détournez les yeux de votre objectif.",
+            "Ce qui vous manque en talent peut être compensé par la passion, la persévérance et la discipline.",
+            "Ne vous arrêtez pas lorsque vous êtes fatigué. Arrêtez-vous lorsque vous avez terminé.",
+            "Le moment que vous sentez le plus besoin de vous effondrer est généralement le moment où vous êtes sur le point de réussir.",
+            "Ne limite pas tes défis, défie tes limites.",
+            "Le succès n’est pas la clé du bonheur. Le bonheur est la clé du succès.",
+            "Ce que vous faites aujourd’hui peut améliorer tous vos lendemains.",
+            "Chaque grande réussite commence par la décision d'essayer.",
+            "N'attends pas que l'opportunité frappe à ta porte, construis ta propre porte.",
+            "La vie est 10% ce qui nous arrive et 90% comment nous réagissons.",
+            "Lève-toi avec détermination, couche-toi avec satisfaction.",
+            "Chaque jour est une chance de faire mieux.",
+            "Le seul vrai échec est celui de ne pas essayer.",
+            "Si vous ne pouvez pas voler, courez. Si vous ne pouvez pas courir, marchez. Si vous ne pouvez pas marcher, rampez, mais quoi que vous fassiez, continuez à avancer.",
+            "Chaque rêve commence par un rêveur.",
+            "Ce n'est pas la volonté de gagner qui compte, c'est la volonté de se préparer à gagner.",
+            "Les grandes réalisations sont toujours précédées de grandes pensées.",
+            "Vous êtes plus fort que vous ne le pensez.",
+            "La force ne vient pas de la capacité physique. Elle vient d'une volonté indomptable.",
+            "Faites de votre mieux, jusqu'à ce que vous puissiez faire mieux.",
+            "Le succès n'est pas pour les paresseux.",
+            "La route vers le succès est semée d'embûches, mais chaque obstacle est une opportunité de grandir.",
+            "Les grandes choses ne viennent pas de la zone de confort.",
+            "Le succès se construit avec des échecs.",
+            "Vos limites ne sont que des illusions.",
+            "Les gagnants trouvent des moyens, les perdants trouvent des excuses.",
+            "Les opportunités ne se produisent pas, vous les créez.",
+            "N'attendez pas pour frapper à la porte de l'opportunité. Construisez votre propre porte.",
+            "La motivation vous met en route, mais c'est l'habitude qui vous garde en mouvement.",
+            "Si vous voulez quelque chose que vous n'avez jamais eu, vous devez faire quelque chose que vous n'avez jamais fait.",
+            "Ne sous-estimez jamais votre pouvoir de changer vous-même.",
+            "Vos seules limites sont celles que vous vous imposez.",
+            "Chaque jour est une opportunité d'être une meilleure version de vous-même.",
+            "Les rêves ne se réalisent pas par magie. Il faut de la sueur, de la détermination et du travail acharné.",
+            "Le succès n'est pas un accident, c'est un choix.",
+            "N'attends pas que les choses arrivent, fais en sorte qu'elles arrivent.",
+            "Votre plus grand adversaire est votre propre esprit.",
+            "La distance entre vos rêves et la réalité s'appelle l'action.",
+            "Votre plus grand projet, c'est vous-même.",
+            "Faites quelque chose aujourd'hui que votre futur soi vous remerciera.",
+            "Les seules limites que vous avez sont celles que vous vous fixez.",
+            "Si vous n'abandonnez jamais, vous ne pouvez jamais échouer.",
+            "La plus grande victoire est de se surpasser.",
+            "Ne perdez pas votre temps à regarder en arrière, vous n'allez pas dans cette direction.",
+            "Votre attitude détermine votre altitude.",
+            "Chaque pas vous rapproche de votre objectif.",
+            "N'oubliez jamais pourquoi vous avez commencé."
+        ];
+
+        let currentQuoteIndex = 0;
+        let favorites = [];
+
+        function showQuote(index) {
+            const quoteContent = document.getElementById("quoteContent");
+            quoteContent.style.opacity = 0;
+            setTimeout(() => {
+                quoteContent.innerText = quotes[index];
+                quoteContent.style.opacity = 1;
+            }, 500);
+
+            updateFavoriteButton();
+        }
+
+        function getRandomQuoteIndex() {
+            return Math.floor(Math.random() * quotes.length);
+        }
+
+        function addToFavorites(index) {
+            if (!favorites.includes(quotes[index])) {
+                favorites.push(quotes[index]);
+            }
+            updateFavoriteButton();
+        }
+
+        function removeFromFavorites(index) {
+            favorites = favorites.filter(quote => quote !== quotes[index]);
+            updateFavoriteButton();
+        }
+
+        function updateFavoriteButton() {
+            const heartIcon = document.getElementById("heartIcon");
+            if (favorites.includes(quotes[currentQuoteIndex])) {
+                heartIcon.style.color = "red";
+            } else {
+                heartIcon.style.color = "white";
+            }
+        }
+
+        function showFavoritesPage() {
+            const widgetContainer = document.getElementById("widgetContainer");
+            const favoritesPage = document.getElementById("favoritesPage");
+            const favoritesList = document.getElementById("favoritesList");
+
+            widgetContainer.style.display = "none";
+            favoritesPage.style.display = "block";
+
+            favoritesList.innerHTML = '';
+            favorites.forEach((quote, index) => {
+                const listItem = document.createElement("li");
+                listItem.innerText = quote;
+                const removeButton = document.createElement("button");
+                removeButton.innerHTML = '<i class="fas fa-trash"></i>';
+                removeButton.addEventListener("click", () => {
+                    removeFromFavorites(index);
+                    showFavoritesPage();
+                });
+                listItem.appendChild(removeButton);
+                favoritesList.appendChild(listItem);
+            });
+        }
+
+        function hideFavoritesPage() {
+            const widgetContainer = document.getElementById("widgetContainer");
+            const favoritesPage = document.getElementById("favoritesPage");
+
+            widgetContainer.style.display = "block";
+            favoritesPage.style.display = "none";
+        }
+
+        document.getElementById("newQuoteButton").addEventListener("click", () => {
+            currentQuoteIndex = getRandomQuoteIndex();
+            showQuote(currentQuoteIndex);
+        });
+
+        document.getElementById("favoriteButton").addEventListener("click", () => {
+            if (favorites.includes(quotes[currentQuoteIndex])) {
+                removeFromFavorites(currentQuoteIndex);
+            } else {
+                addToFavorites(currentQuoteIndex);
+            }
+        });
+
+        document.getElementById("viewFavoritesButton").addEventListener("click", showFavoritesPage);
+        document.getElementById("backButton").addEventListener("click", hideFavoritesPage);
+
+        // Afficher une citation aléatoire au démarrage
+        currentQuoteIndex = getRandomQuoteIndex();
+        showQuote(currentQuoteIndex);
+    </script>
+</body>
+</html>
