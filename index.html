@@ -6,269 +6,316 @@
     <title>Solo Brainstorming</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #1e1e2f;
-            color: white;
+            background: transparent;
+            font-family: 'Roboto', sans-serif;
+            color: #ffffff;
+            padding: 0;
+            margin: 0;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
         }
 
         .widget-container {
-            background-color: #2a2a3d;
-            padding: 30px;
+            width: 85%;
+            max-width: 400px;
+            background: rgba(14, 14, 19, 0.8);
+            border: 2px solid #413f54;
             border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+            transition: transform 0.3s ease-in-out;
             text-align: center;
-            width: 80%;
-            max-width: 600px;
+        }
+
+        .widget-container:hover {
+            transform: translateY(-5px);
         }
 
         h1 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: #f9a826;
+            font-family: 'Montserrat', sans-serif;
+            color: #00d2ff;
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.8);
+            margin-bottom: 15px;
         }
 
         .quote-box {
-            font-size: 1.5rem;
-            line-height: 1.5;
             margin-bottom: 20px;
-            font-weight: 600;
+            position: relative;
+            overflow: hidden;
         }
 
-        .favorite-btn, .new-quote-btn, .view-favorites-btn, .back-btn {
-            background-color: #f9a826;
-            color: #1e1e2f;
+        .quote-content {
+            font-family: 'Roboto', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            line-height: 1.4;
+            margin-bottom: 20px;
+            color: #ffffff;
+            text-shadow: 0 0 8px rgba(0, 210, 255, 0.8), 0 0 15px rgba(0, 210, 255, 0.5);
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .favorite-btn, .new-quote-btn {
+            background: none;
             border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            font-size: 1.2rem;
+            padding: 10px;
+            font-family: 'Roboto', sans-serif;
+            color: #ffffff;
             cursor: pointer;
             margin: 5px;
-            transition: background-color 0.3s ease;
+            font-size: 24px;
         }
 
-        .favorite-btn i, .new-quote-btn i {
-            color: white;
-            font-size: 1.2rem;
+        .favorite-btn .fa-heart {
+            transition: color 0.3s ease-in-out;
         }
 
-        .favorite-btn:hover, .new-quote-btn:hover, .view-favorites-btn:hover, .back-btn:hover {
-            background-color: #d18f1a;
+        .new-quote-btn .fa-sync-alt {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .new-quote-btn:hover .fa-sync-alt {
+            transform: rotate(360deg);
+        }
+
+        .view-favorites-btn {
+            margin-top: 10px;
+            padding: 10px 15px;
+            font-family: 'Montserrat', sans-serif;
+            border: 2px solid #413f54;
+            background: #1b1b28;
+            color: #ffffff;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+            transition: background 0.3s;
+        }
+
+        .view-favorites-btn:hover {
+            background: #00d2ff;
+            color: #000;
         }
 
         .favorites-page {
             display: none;
-            text-align: center;
+            margin-top: 20px;
         }
 
         .favorites-list {
             list-style-type: none;
             padding: 0;
-            margin: 20px 0;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
         }
 
         .favorites-list li {
-            background-color: #33334d;
-            margin: 10px 0;
-            padding: 15px;
+            background-color: #333335;
+            margin: 5px 0;
+            padding: 10px;
             border-radius: 5px;
+            box-shadow: 0 0 10px rgba(126, 87, 194, 0.5);
+            text-align: left;
             position: relative;
+            animation: fadeInUp 0.5s ease-in-out;
         }
 
         .favorites-list li button {
-            background-color: transparent;
-            border: none;
-            color: red;
             position: absolute;
             right: 10px;
             top: 10px;
+            background: none;
+            border: none;
+            color: #ff0000;
+            font-size: 20px;
             cursor: pointer;
-            font-size: 1.5rem;
         }
 
-        .quote-content {
-            opacity: 1;
-            transition: opacity 0.5s ease-in-out;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #favoritesPage {
+            display: none;
+            width: 85%;
+            max-width: 400px;
+            background: rgba(14, 14, 19, 0.8);
+            border: 2px solid #413f54;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+            transition: transform 0.3s ease-in-out;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        #favoritesPage h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: #00d2ff;
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.8);
+            margin-bottom: 15px;
+        }
+
+        .back-btn {
+            margin-top: 20px;
+            padding: 10px 15px;
+            font-family: 'Montserrat', sans-serif;
+            border: 2px solid #413f54;
+            background: #1b1b28;
+            color: #ffffff;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #00d2ff;
+            color: #000;
         }
     </style>
 </head>
 <body>
     <div class="widget-container" id="widgetContainer">
-        <h1>Solo Brainstorming</h1>
+        <h1 id="widget-title">Solo Brainstorming</h1>
+
         <div class="quote-box">
-            <p id="quoteContent" class="quote-content"></p>
+            <p class="quote-content" id="quoteContent">"Votre première citation apparaîtra ici!"</p>
+            <button id="favoriteButton" class="favorite-btn"><i id="heartIcon" class="fas fa-heart"></i></button>
+            <button id="newQuoteButton" class="new-quote-btn"><i class="fas fa-sync-alt"></i></button>
         </div>
-        <button id="favoriteButton" class="favorite-btn"><i id="heartIcon" class="fas fa-heart"></i></button>
-        <button id="newQuoteButton" class="new-quote-btn"><i class="fas fa-sync-alt"></i></button>
+
         <button id="viewFavoritesButton" class="view-favorites-btn">Voir les Favoris</button>
     </div>
 
-    <div id="favoritesPage" class="favorites-page">
-        <h2>Mes Citations Préférées</h2>
+    <!-- Page des favoris -->
+    <div id="favoritesPage">
+        <h2>Vos Citations Préférées</h2>
         <ul id="favoritesList" class="favorites-list"></ul>
-        <button id="backButton" class="back-btn">Retour</button>
+        <button class="back-btn" id="backButton">Retour</button>
     </div>
 
     <script>
         const quotes = [
-            "Le succès n'est pas final, l'échec n'est pas fatal : c'est le courage de continuer qui compte.",
-            "Le seul endroit où le succès précède le travail est dans le dictionnaire.",
-            "N'abandonne jamais. Aujourd'hui est difficile, demain le sera encore plus, mais après-demain sera ensoleillé.",
-            "Le secret de votre avenir est caché dans votre routine quotidienne.",
-            "Ne compte pas les jours, fais que les jours comptent.",
-            "L'échec est seulement l'opportunité de recommencer de manière plus intelligente.",
-            "Votre temps est limité, ne le gâchez pas en menant une existence qui n'est pas la vôtre.",
-            "La seule façon de faire du bon travail est d'aimer ce que vous faites.",
-            "Il n'y a pas de raccourci pour atteindre n'importe quel endroit qui vaille la peine d'aller.",
-            "Vous devez vous attendre à de grandes choses de vous-même avant de pouvoir les réaliser.",
-            "La plus grande gloire n'est pas de ne jamais tomber, mais de se relever à chaque chute.",
-            "Le travail acharné bat le talent quand le talent ne travaille pas dur.",
-            "Ne rêvez pas de succès, travaillez pour l'obtenir.",
-            "Croyez en vous-même et en tout ce que vous êtes. Sachez qu'il y a quelque chose en vous qui est plus grand que n'importe quel obstacle.",
-            "Le succès est la somme de petits efforts, répétés jour après jour.",
-            "La réussite, c'est se lever une fois de plus qu'on est tombé.",
-            "Les obstacles sont ces choses effrayantes que vous voyez lorsque vous détournez les yeux de votre objectif.",
-            "Ce qui vous manque en talent peut être compensé par la passion, la persévérance et la discipline.",
-            "Ne vous arrêtez pas lorsque vous êtes fatigué. Arrêtez-vous lorsque vous avez terminé.",
-            "Le moment que vous sentez le plus besoin de vous effondrer est généralement le moment où vous êtes sur le point de réussir.",
-            "Ne limite pas tes défis, défie tes limites.",
-            "Le succès n’est pas la clé du bonheur. Le bonheur est la clé du succès.",
-            "Ce que vous faites aujourd’hui peut améliorer tous vos lendemains.",
-            "Chaque grande réussite commence par la décision d'essayer.",
-            "N'attends pas que l'opportunité frappe à ta porte, construis ta propre porte.",
-            "La vie est 10% ce qui nous arrive et 90% comment nous réagissons.",
-            "Lève-toi avec détermination, couche-toi avec satisfaction.",
-            "Chaque jour est une chance de faire mieux.",
-            "Le seul vrai échec est celui de ne pas essayer.",
-            "Si vous ne pouvez pas voler, courez. Si vous ne pouvez pas courir, marchez. Si vous ne pouvez pas marcher, rampez, mais quoi que vous fassiez, continuez à avancer.",
-            "Chaque rêve commence par un rêveur.",
-            "Ce n'est pas la volonté de gagner qui compte, c'est la volonté de se préparer à gagner.",
-            "Les grandes réalisations sont toujours précédées de grandes pensées.",
-            "Vous êtes plus fort que vous ne le pensez.",
-            "La force ne vient pas de la capacité physique. Elle vient d'une volonté indomptable.",
-            "Faites de votre mieux, jusqu'à ce que vous puissiez faire mieux.",
-            "Le succès n'est pas pour les paresseux.",
-            "La route vers le succès est semée d'embûches, mais chaque obstacle est une opportunité de grandir.",
-            "Les grandes choses ne viennent pas de la zone de confort.",
-            "Le succès se construit avec des échecs.",
-            "Vos limites ne sont que des illusions.",
-            "Les gagnants trouvent des moyens, les perdants trouvent des excuses.",
-            "Les opportunités ne se produisent pas, vous les créez.",
-            "N'attendez pas pour frapper à la porte de l'opportunité. Construisez votre propre porte.",
-            "La motivation vous met en route, mais c'est l'habitude qui vous garde en mouvement.",
-            "Si vous voulez quelque chose que vous n'avez jamais eu, vous devez faire quelque chose que vous n'avez jamais fait.",
-            "Ne sous-estimez jamais votre pouvoir de changer vous-même.",
-            "Vos seules limites sont celles que vous vous imposez.",
-            "Chaque jour est une opportunité d'être une meilleure version de vous-même.",
-            "Les rêves ne se réalisent pas par magie. Il faut de la sueur, de la détermination et du travail acharné.",
-            "Le succès n'est pas un accident, c'est un choix.",
-            "N'attends pas que les choses arrivent, fais en sorte qu'elles arrivent.",
-            "Votre plus grand adversaire est votre propre esprit.",
-            "La distance entre vos rêves et la réalité s'appelle l'action.",
-            "Votre plus grand projet, c'est vous-même.",
-            "Faites quelque chose aujourd'hui que votre futur soi vous remerciera.",
-            "Les seules limites que vous avez sont celles que vous vous fixez.",
-            "Si vous n'abandonnez jamais, vous ne pouvez jamais échouer.",
-            "La plus grande victoire est de se surpasser.",
-            "Ne perdez pas votre temps à regarder en arrière, vous n'allez pas dans cette direction.",
-            "Votre attitude détermine votre altitude.",
-            "Chaque pas vous rapproche de votre objectif.",
-            "N'oubliez jamais pourquoi vous avez commencé."
+            "Monte en niveau !",
+            "Même si tu n'es pas parfait, tu es une édition limitée.",
+            "Je ne sais pas comment je vais gagner, je sais juste que je ne vais pas perdre.",
+            "Les forts chassent les faibles.",
+            "Un chasseur doit chasser.",
+            "Chaque jour est une opportunité de devenir plus fort.",
+            "La puissance se trouve dans la solitude.",
+            "Tu es le seul maître de ton destin.",
+            "Chaque défi est une opportunité déguisée.",
+            "Ne te compare pas aux autres, compare-toi à qui tu étais hier.",
+            "La peur n’est qu’un état d’esprit, maîtrise-la.",
+            "Tout ce que tu veux est de l’autre côté de la peur.",
+            "Le progrès demande des sacrifices.",
+            "Même la plus longue des nuits finira par laisser place à l'aube.",
+            "La souffrance d'aujourd'hui est la force de demain.",
+            "L'échec est la preuve que tu as essayé.",
+            "Les grandes choses ne viennent jamais de zones de confort.",
+            "Le travail acharné bat le talent quand le talent ne travaille pas.",
+            "Les gagnants n'abandonnent jamais, et ceux qui abandonnent ne gagnent jamais.",
+            "Tu es plus fort que tu ne le penses.",
+            "Ne t'arrête jamais, sauf pour admirer le chemin parcouru.",
+            "Le succès, c'est se lever une fois de plus que les autres.",
+            "La discipline est le pont entre les objectifs et les réalisations.",
+            "Tu ne peux pas vaincre la personne qui n'abandonne jamais.",
+            "Chaque échec est un pas de plus vers la réussite.",
+            "Les perdants abandonnent quand ils échouent. Les gagnants échouent jusqu'à ce qu'ils réussissent.",
+            "Ce que tu plantes aujourd'hui, tu le récolteras demain.",
+            "Le succès n'est pas la clé du bonheur, le bonheur est la clé du succès.",
+            "Transforme tes blessures en sagesse.",
+            "Les rêves ne se réalisent pas quand on dort, mais quand on se réveille.",
         ];
 
-        let currentQuoteIndex = 0;
-        let favorites = [];
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
-        function showQuote(index) {
-            const quoteContent = document.getElementById("quoteContent");
+        function updateQuoteDisplay() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            const newQuote = quotes[randomIndex];
+            const quoteContent = document.getElementById('quoteContent');
+
             quoteContent.style.opacity = 0;
             setTimeout(() => {
-                quoteContent.innerText = quotes[index];
+                quoteContent.innerText = newQuote;
                 quoteContent.style.opacity = 1;
             }, 500);
 
-            updateFavoriteButton();
+            updateFavoriteButton(newQuote);
         }
 
-        function getRandomQuoteIndex() {
-            return Math.floor(Math.random() * quotes.length);
-        }
-
-        function addToFavorites(index) {
-            if (!favorites.includes(quotes[index])) {
-                favorites.push(quotes[index]);
-            }
-            updateFavoriteButton();
-        }
-
-        function removeFromFavorites(index) {
-            favorites = favorites.filter(quote => quote !== quotes[index]);
-            updateFavoriteButton();
-        }
-
-        function updateFavoriteButton() {
-            const heartIcon = document.getElementById("heartIcon");
-            if (favorites.includes(quotes[currentQuoteIndex])) {
-                heartIcon.style.color = "red";
+        function updateFavoriteButton(currentQuote) {
+            const heartIcon = document.getElementById('heartIcon');
+            if (favorites.includes(currentQuote)) {
+                heartIcon.style.color = 'red';
             } else {
-                heartIcon.style.color = "white";
+                heartIcon.style.color = 'white';
             }
         }
 
-        function showFavoritesPage() {
-            const widgetContainer = document.getElementById("widgetContainer");
-            const favoritesPage = document.getElementById("favoritesPage");
-            const favoritesList = document.getElementById("favoritesList");
-
-            widgetContainer.style.display = "none";
-            favoritesPage.style.display = "block";
-
+        function renderFavorites() {
+            const favoritesList = document.getElementById('favoritesList');
             favoritesList.innerHTML = '';
-            favorites.forEach((quote, index) => {
-                const listItem = document.createElement("li");
-                listItem.innerText = quote;
-                const removeButton = document.createElement("button");
-                removeButton.innerHTML = '<i class="fas fa-trash"></i>';
-                removeButton.addEventListener("click", () => {
-                    removeFromFavorites(index);
-                    showFavoritesPage();
+            favorites.forEach(fav => {
+                const li = document.createElement('li');
+                li.textContent = fav;
+                const removeButton = document.createElement('button');
+                removeButton.textContent = '✘';
+                removeButton.addEventListener('click', () => {
+                    favorites = favorites.filter(favorite => favorite !== fav);
+                    localStorage.setItem('favorites', JSON.stringify(favorites));
+                    renderFavorites();
+                    updateFavoriteButton(document.getElementById('quoteContent').innerText);
                 });
-                listItem.appendChild(removeButton);
-                favoritesList.appendChild(listItem);
+
+                li.appendChild(removeButton);
+                favoritesList.appendChild(li);
             });
         }
 
-        function hideFavoritesPage() {
-            const widgetContainer = document.getElementById("widgetContainer");
-            const favoritesPage = document.getElementById("favoritesPage");
+        document.getElementById('newQuoteButton').addEventListener('click', updateQuoteDisplay);
 
-            widgetContainer.style.display = "block";
-            favoritesPage.style.display = "none";
-        }
+        document.getElementById('favoriteButton').addEventListener('click', function () {
+            const currentQuote = document.getElementById('quoteContent').innerText;
+            const heartIcon = document.getElementById('heartIcon');
 
-        document.getElementById("newQuoteButton").addEventListener("click", () => {
-            currentQuoteIndex = getRandomQuoteIndex();
-            showQuote(currentQuoteIndex);
-        });
-
-        document.getElementById("favoriteButton").addEventListener("click", () => {
-            if (favorites.includes(quotes[currentQuoteIndex])) {
-                removeFromFavorites(currentQuoteIndex);
+            if (favorites.includes(currentQuote)) {
+                favorites = favorites.filter(fav => fav !== currentQuote);
+                heartIcon.style.color = 'white';
             } else {
-                addToFavorites(currentQuoteIndex);
+                favorites.push(currentQuote);
+                heartIcon.style.color = 'red';
             }
+            localStorage.setItem('favorites', JSON.stringify(favorites));
         });
 
-        document.getElementById("viewFavoritesButton").addEventListener("click", showFavoritesPage);
-        document.getElementById("backButton").addEventListener("click", hideFavoritesPage);
+        document.getElementById('viewFavoritesButton').addEventListener('click', function () {
+            document.getElementById('widgetContainer').style.display = 'none';
+            document.getElementById('favoritesPage').style.display = 'block';
+            renderFavorites();
+        });
 
-        // Afficher une citation aléatoire au démarrage
-        currentQuoteIndex = getRandomQuoteIndex();
-        showQuote(currentQuoteIndex);
+        document.getElementById('backButton').addEventListener('click', function () {
+            document.getElementById('favoritesPage').style.display = 'none';
+            document.getElementById('widgetContainer').style.display = 'block';
+        });
+
+        // Initial setup
+        updateQuoteDisplay();
     </script>
 </body>
 </html>
